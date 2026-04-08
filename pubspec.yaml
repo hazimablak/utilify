@@ -1,0 +1,69 @@
+name: utilify
+description: Cok fonksiyonlu, offline arac seti.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # --- Temel Yapı ---
+  cupertino_icons: ^1.0.6
+  provider: ^6.1.1
+  permission_handler: ^11.3.1
+  path_provider: ^2.1.2
+  open_filex: ^4.4.0
+  image_picker: ^1.0.7
+  # SİLDİM: image_gallery_saver BURADAYDI, ARTIK YOK!
+
+  # --- Modül 1: Görsel ---
+  flutter_image_compress: ^2.1.0
+  image_cropper: ^8.0.2
+
+  # --- Modül 2: PDF ---
+  pdf: ^3.10.7
+  printing: ^5.12.0
+
+  # --- Modül 3: Ses/Çeviri ---
+  speech_to_text: ^7.0.0
+  flutter_tts: ^3.8.3
+  google_mlkit_translation: ^0.12.0
+
+  # --- Modül 4: OCR ---
+  google_mlkit_text_recognition: ^0.14.0
+  url_launcher: ^6.2.0
+
+  # --- Modül 5: QR ---
+  mobile_scanner: ^5.2.3
+  qr_flutter: ^4.1.0
+  screenshot: ^3.0.0
+  gal: ^2.3.0 # Yeni kaydetme paketi burada duruyor, süper!
+
+  # --- Modül 6: Şifre Kasası (YENİ) ---
+  flutter_secure_storage: ^9.0.0
+  clipboard: ^0.1.3
+  # İnternetten veri çekmek için
+  http: ^1.2.0  
+
+  # --- Paylaşım ve Reklam ---
+  share_plus: ^10.0.0
+  google_mobile_ads: ^5.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.13.1 # İkon Oluşturucu Paket
+
+# --- İKON AYARLARI ---
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon.png"
+  min_sdk_android: 21
+  
+flutter:
+  uses-material-design: true
