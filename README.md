@@ -1,16 +1,29 @@
-# utilify
+# 🛠️ Utilify Ultimate
 
-A new Flutter project.
+**Tamamen çevrimdışı çalışan, gizlilik odaklı ve çok fonksiyonlu araç kutusu uygulaması.**
 
-## Getting Started
+🚧 *Bu proje aktif geliştirme aşamasındadır (Work in Progress). Feature-First mimarisi kullanılarak inşa edilmektedir.*
 
-This project is a starting point for a Flutter application.
+## 🌟 Neden utilify?
+Günümüzde birçok araç uygulaması internet bağlantısı gerektiriyor ve kullanıcı verilerini sunuculara yüklüyor. **utilify**, tüm işlemleri **cihaz üzerinde (on-device)** gerçekleştirerek %100 gizlilik, güvenlik ve hız sunmayı hedefler.
 
-A few resources to get you started if this is your first Flutter project:
+## 🚀 Planlanan Modüller (Yakında)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+📱 **Uygulama 4 ana modülden oluşmaktadır:**
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* 🎨 **Görsel Atölyesi (Image Lab):** Resim formatlarını dönüştürme ve sıkıştırma işlemleri.
+* 📄 **Belge Masası (PDF Studio):** Fotoğraflardan PDF oluşturma ve PDF düzenleme.
+* 🎙️ **Dil Çevirici (Voice & Text):** Sesi anında yazıya dökme (STT) ve metni sese çevirme (TTS).
+* 🔍 **Optik Okuyucu (OCR):** Cihaz kamerasından veya galeriden seçilen metinleri tarayıp dijitalleştirme.
+
+## 🏗️ Kullanılan Teknolojiler & Mimari
+
+Bu proje, ölçeklenebilirlik ve temiz kod prensipleri gözetilerek **Feature-First** (Özellik Odaklı) klasör yapısıyla geliştirilmektedir.
+
+* **Dil:** Dart
+* **Framework:** Flutter
+* **State Management:** Provider
+* **Temel Paketler:** `google_ml_kit` (OCR), `pdf` & `printing`, `speech_to_text`
+
+---
+> *Developed by [Hazım Ablak](https://software-developer-hafiz.netlify.app/) - Bilgisayar Mühendisliği Öğrencisi*
