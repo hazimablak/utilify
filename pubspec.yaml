@@ -15,7 +15,6 @@ dependencies:
   provider: ^6.1.1
   permission_handler: ^11.3.1
   path_provider: ^2.1.2
-  open_filex: ^4.4.0
   image_picker: ^1.0.7
   # SİLDİM: image_gallery_saver BURADAYDI, ARTIK YOK!
 
@@ -37,7 +36,7 @@ dependencies:
   url_launcher: ^6.2.0
 
   # --- Modül 5: QR ---
-  mobile_scanner: ^5.2.3
+  mobile_scanner: ^7.2.0
   qr_flutter: ^4.1.0
   screenshot: ^3.0.0
   gal: ^2.3.0 # Yeni kaydetme paketi burada duruyor, süper!
@@ -51,6 +50,9 @@ dependencies:
   # --- Paylaşım ve Reklam ---
   share_plus: ^10.0.0
   google_mobile_ads: ^5.1.0
+  syncfusion_flutter_pdf: ^33.1.47
+  file_picker: ^11.0.2
+  open_file: ^3.5.11
 
 dev_dependencies:
   flutter_test:

@@ -25,7 +25,7 @@ class CropScreen extends StatelessWidget {
         color: Colors.white,
         child: const SafeArea(child: Padding(padding: EdgeInsets.only(bottom: 5), child: AdBannerWidget())),
       ),
-      body: SafeArea( // <--- 1. YENİ EKLENEN (Kalkan Widget)
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -54,11 +54,9 @@ class CropScreen extends StatelessWidget {
                         ),
                 ),
               ),
-  
               const SizedBox(height: 30),
-  
+
               // --- BUTONLAR ---
-              // ... (Buradaki buton kodları aynen kalacak)
               if (provider.selectedImage == null)
                 SizedBox(
                   width: double.infinity,
@@ -119,7 +117,7 @@ class CropScreen extends StatelessWidget {
             ],
           ),
         ),
-      ), // <--- SafeArea Kapanışı
+      ),
     );
   }
 }

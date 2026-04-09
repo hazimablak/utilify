@@ -34,10 +34,9 @@ class RemoverScreen extends StatelessWidget {
               height: 400,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.grey[300], // Sadece gri renk, resim yok!
+                color: Colors.grey[300], 
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: Colors.grey[400]!),
-                // HATALI SATIRLAR SİLİNDİ 🗑️
               ),
               child: provider.selectedImage == null
                   ? const Column(
@@ -144,10 +143,10 @@ class RemoverScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              
-              const SizedBox(height: 10),
-              if(provider.removedImageBytes != null)
-                const Text("💡 Resim şeffaf (PNG) olarak kaydedilecektir.", style: TextStyle(color: Colors.grey, fontSize: 12)),
+            
+            const SizedBox(height: 10),
+            if(provider.removedImageBytes != null)
+              const Text("💡 Resim şeffaf (PNG) olarak kaydedilecektir.", style: TextStyle(color: Colors.grey, fontSize: 12)),
           ],
         ),
       ),

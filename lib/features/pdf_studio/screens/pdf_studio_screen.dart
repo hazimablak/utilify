@@ -1,166 +1,80 @@
-import 'dart:io';
+// lib/features/pdf_studio/screens/pdf_studio_screen.dart
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:utilify/features/pdf_studio/logic/pdf_studio_provider.dart';
-import 'package:utilify/widgets/ad_banner_widget.dart'; // Reklam Widget'ı
+
+import 'package:utilify/features/pdf_studio/screens/image_to_pdf_screen.dart';
+import 'package:utilify/features/pdf_studio/screens/pdf_merge_screen.dart';
+import 'package:utilify/features/pdf_studio/screens/pdf_encrypt_screen.dart';
+import 'package:utilify/features/pdf_studio/screens/pdf_extract_screen.dart';
 
 class PdfStudioScreen extends StatelessWidget {
   const PdfStudioScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<PdfStudioProvider>(context);
+    final List<Map<String, dynamic>> pdfTools = [
+      {'title': 'Görseli PDF Yap', 'icon': Icons.picture_as_pdf, 'color': Colors.orange},
+      {'title': 'PDF Birleştir', 'icon': Icons.merge_type, 'color': Colors.blue},
+      {'title': 'PDF Şifrele', 'icon': Icons.lock_outline, 'color': Colors.redAccent},
+      {'title': 'Sayfa Çıkart', 'icon': Icons.content_copy, 'color': Colors.teal},
+    ];
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Smart Doc Maker'),
-        actions: [
-          if (provider.selectedImages.isNotEmpty)
-            IconButton(
-              icon: const Icon(Icons.delete_sweep_outlined),
-              onPressed: () => provider.clearAll(),
-              tooltip: "Tümünü Temizle",
-            )
-        ],
+    return GridView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: pdfTools.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+        childAspectRatio: 1.1,
       ),
-      // --- DÜZELTME: Banner Reklamı En Alta Ekledik ve Beyaz Fon Verdik ---
-      bottomNavigationBar: Container(
-        color: Colors.white, // Reklamın arkası beyaz olsun
-        child: const SafeArea(
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 5), // Alttan biraz kaldır
-            child: AdBannerWidget(),
-          ),
-        ),
-      ),
-      // -------------------------------------------------------------------
-      body: Column(
-        children: [
-          // BİLGİ NOTU
-          if (provider.selectedImages.isNotEmpty)
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              color: Colors.orange.withOpacity(0.1),
-              width: double.infinity,
-              child: const Text(
-                "💡 Sıralamak için basılı tutun ve sürükleyin",
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.orange, fontSize: 12),
-              ),
-            ),
-
-          // LİSTE
-          Expanded(
-            child: provider.selectedImages.isEmpty
-                ? _buildEmptyState(context, provider)
-                : ReorderableListView.builder(
-                    padding: const EdgeInsets.all(16),
-                    itemCount: provider.selectedImages.length,
-                    onReorder: (oldIndex, newIndex) => provider.reorderImages(oldIndex, newIndex),
-                    itemBuilder: (context, index) {
-                      final File img = provider.selectedImages[index];
-                      return Card(
-                        key: ValueKey(img.path),
-                        margin: const EdgeInsets.only(bottom: 12),
-                        elevation: 2,
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.all(8),
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.file(img, width: 60, height: 60, fit: BoxFit.cover),
-                          ),
-                          title: Text("Sayfa ${index + 1}", style: const TextStyle(fontWeight: FontWeight.bold)),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.crop, color: Colors.indigo),
-                                onPressed: () => provider.cropImage(index, context),
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.close, color: Colors.red),
-                                onPressed: () => provider.removeImage(index),
-                              ),
-                              const Icon(Icons.drag_handle, color: Colors.grey),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-          ),
-
-          // --- BUTONLAR ---
-          Container(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 16), // Alt boşluğu azalttık çünkü reklam var
+      itemBuilder: (context, index) {
+        final tool = pdfTools[index];
+        return InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: () {
+            if (tool['title'] == 'Görseli PDF Yap') {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const ImageToPdfScreen()));
+            } 
+            else if (tool['title'] == 'PDF Birleştir') {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const PdfMergeScreen()));
+            }
+            else if (tool['title'] == 'PDF Şifrele') {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const PdfEncryptScreen()));
+            }
+            else if (tool['title'] == 'Sayfa Çıkart') {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const PdfExtractScreen()));
+            }
+          },
+          child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
-              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10, offset: Offset(0, -5))],
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 10, offset: const Offset(0, 4)),
+              ],
             ),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (provider.isGenerating)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      provider.statusMessage,
-                      style: const TextStyle(color: Colors.indigo, fontWeight: FontWeight.bold),
-                    ),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: tool['color'].withOpacity(0.1),
+                    shape: BoxShape.circle,
                   ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: provider.isGenerating ? null : () => provider.pickImages(),
-                        style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16)),
-                        icon: const Icon(Icons.add_photo_alternate),
-                        label: const Text("Sayfa Ekle"),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: provider.selectedImages.isEmpty || provider.isGenerating
-                            ? null
-                            : () => provider.createAndShowPdf(context),
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          backgroundColor: Colors.indigo,
-                          foregroundColor: Colors.white,
-                        ),
-                        icon: provider.isGenerating
-                            ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
-                            : const Icon(Icons.picture_as_pdf),
-                        label: Text(provider.isGenerating ? "Bekleyiniz..." : "PDF OLUŞTUR"),
-                      ),
-                    ),
-                  ],
+                  child: Icon(tool['icon'], size: 32, color: tool['color']),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  tool['title'],
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildEmptyState(BuildContext context, PdfStudioProvider provider) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.snippet_folder_rounded, size: 80, color: Colors.indigo.withOpacity(0.3)),
-          const SizedBox(height: 10),
-          const Text("Belgeniz boş", style: TextStyle(fontSize: 18, color: Colors.grey)),
-          const SizedBox(height: 20),
-          FilledButton.tonalIcon(
-            onPressed: () => provider.pickImages(),
-            icon: const Icon(Icons.add),
-            label: const Text("İlk Sayfayı Ekle"),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

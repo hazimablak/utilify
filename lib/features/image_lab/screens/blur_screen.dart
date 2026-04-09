@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:utilify/features/image_lab/logic/blur_provider.dart';
@@ -65,7 +64,6 @@ class BlurScreen extends StatelessWidget {
 
                           // 2. Dokunma Algılayıcı ve Bulanıklık
                           GestureDetector(
-                            // DÜZELTİLEN KISIM BURASI 👇 (Tek satır oldu)
                             onPanUpdate: (details) {
                               provider.addBlurPoint(details.localPosition);
                             },

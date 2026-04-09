@@ -1,224 +1,79 @@
+// lib/features/voice_text/screens/voice_text_screen.dart
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter/services.dart';
-import 'package:google_mlkit_translation/google_mlkit_translation.dart';
-import 'package:utilify/features/voice_text/logic/voice_text_provider.dart';
-import 'package:utilify/widgets/ad_banner_widget.dart'; // Reklam
-
-class VoiceTextScreen extends StatefulWidget {
+import 'package:utilify/features/voice_text/screens/lingua_master_screen.dart';
+import 'package:utilify/features/voice_text/screens/tts_screen.dart';
+import 'package:utilify/features/voice_text/screens/transcribe_screen.dart';
+import 'package:utilify/features/voice_text/screens/voice_effects_screen.dart';
+class VoiceTextScreen extends StatelessWidget {
   const VoiceTextScreen({super.key});
 
   @override
-  State<VoiceTextScreen> createState() => _VoiceTextScreenState();
-}
-
-class _VoiceTextScreenState extends State<VoiceTextScreen> {
-  final TextEditingController _controller = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<VoiceTextProvider>(context);
+    // 🎙️ SES ARAÇLARI LİSTESİ (Şu an 2'si aktif, 3.sü yolda!)
+    final List<Map<String, dynamic>> tools = [
+      {'title': 'Anında Çeviri', 'icon': Icons.translate, 'color': Colors.indigo},
+      {'title': 'Metin Seslendir', 'icon': Icons.record_voice_over, 'color': Colors.teal},
+      {'title': 'Sesten Metne', 'icon': Icons.mic_external_on, 'color': Colors.orange},
+      {'title': 'Ses Efektleri', 'icon': Icons.graphic_eq, 'color': Colors.purple},
+    ];
 
-    if (provider.text != _controller.text && 
-        provider.text != "Konuşmak için mikrofona basın...") {
-      _controller.text = provider.text;
-      _controller.selection = TextSelection.fromPosition(TextPosition(offset: _controller.text.length));
-    }
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Lingua Master'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              provider.clear();
-              _controller.clear();
-            },
-          )
-        ],
+    return GridView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: tools.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+        childAspectRatio: 1.1,
       ),
-      // --- REKLAM ALANI ---
-      bottomNavigationBar: Container(
-        color: Colors.white,
-        child: const SafeArea(
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 5),
-            child: AdBannerWidget(),
-          ),
-        ),
-      ),
-      // --------------------
-      body: SingleChildScrollView(
-        // Alt boşluğu artır
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 50), 
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: Colors.indigo.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildLangBadge(provider.sourceLanguage),
-                  IconButton(
-                    icon: const Icon(Icons.swap_horiz, color: Colors.indigo),
-                    onPressed: () => provider.swapLanguages(),
+      itemBuilder: (context, index) {
+        final tool = tools[index];
+        return InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: () {
+            if (tool['title'] == 'Anında Çeviri') {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const LinguaMasterScreen()));
+            } 
+            else if (tool['title'] == 'Metin Seslendir') {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const TtsScreen()));
+            }
+            else if (tool['title'] == 'Sesten Metne') {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const TranscribeScreen()));
+            }
+            else if (tool['title'] == 'Ses Efektleri') {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const VoiceEffectsScreen()));
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 10, offset: const Offset(0, 4)),
+              ],
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: tool['color'].withOpacity(0.1),
+                    shape: BoxShape.circle,
                   ),
-                  _buildLangBadge(provider.targetLanguage),
-                ],
-              ),
-            ),
-            
-            const SizedBox(height: 20),
-
-            // Giriş Alanı
-            Container(
-              height: 150,
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: Colors.grey[300]!),
-              ),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _controller,
-                      maxLines: null,
-                      expands: true,
-                      onChanged: (val) => provider.updateText(val),
-                      decoration: const InputDecoration(
-                        hintText: "Yazın veya konuşun...",
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.volume_up_outlined),
-                        onPressed: () => provider.speakText(provider.text, false),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.translate, color: Colors.indigo),
-                        onPressed: () => provider.translate(),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 10),
-
-            // Çeviri Alanı
-            Container(
-              height: 150,
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.indigo.withOpacity(0.05),
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: Colors.indigo.withOpacity(0.3)),
-              ),
-              child: provider.isTranslating
-                  ? const Center(child: CircularProgressIndicator())
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: SelectableText(
-                              provider.translatedText.isEmpty 
-                                  ? "Çeviri sonucu burada görünecek" 
-                                  : provider.translatedText,
-                              style: TextStyle(
-                                fontSize: 18, 
-                                color: provider.translatedText.isEmpty ? Colors.grey : Colors.black87
-                              ),
-                            ),
-                          ),
-                        ),
-                        if (provider.translatedText.isNotEmpty)
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.copy),
-                                onPressed: () {
-                                  Clipboard.setData(ClipboardData(text: provider.translatedText));
-                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Kopyalandı")));
-                                },
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.volume_up, color: Colors.indigo),
-                                onPressed: () => provider.speakText(provider.translatedText, true),
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.share, color: Colors.green),
-                                onPressed: () => provider.shareAudioFile(),
-                              ),
-                            ],
-                          )
-                      ],
-                    ),
-            ),
-
-            const SizedBox(height: 30),
-
-            // Mikrofon
-            AvatarGlowWidget(
-              animate: provider.isListening,
-              child: SizedBox(
-                width: 70,
-                height: 70,
-                child: FloatingActionButton(
-                  onPressed: () => provider.toggleListening(),
-                  backgroundColor: provider.isListening ? Colors.red : Colors.indigo,
-                  child: Icon(provider.isListening ? Icons.mic_off : Icons.mic, size: 35),
+                  child: Icon(tool['icon'], size: 32, color: tool['color']),
                 ),
-              ),
+                const SizedBox(height: 12),
+                Text(
+                  tool['title'],
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
-             const SizedBox(height: 10),
-             Text(provider.isListening ? "Dinleniyor..." : "Konuşmak için bas", style: const TextStyle(color: Colors.grey)),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLangBadge(TranslateLanguage lang) {
-    String text = lang == TranslateLanguage.turkish ? "🇹🇷 Türkçe" : "🇬🇧 İngilizce";
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey[300]!),
-      ),
-      child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
-    );
-  }
-}
-
-class AvatarGlowWidget extends StatelessWidget {
-  final bool animate;
-  final Widget child;
-  const AvatarGlowWidget({super.key, required this.animate, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: animate ? BoxDecoration(
-        shape: BoxShape.circle,
-        boxShadow: [BoxShadow(color: Colors.red.withOpacity(0.5), blurRadius: 20, spreadRadius: 5)]
-      ) : null,
-      child: child,
+          ),
+        );
+      },
     );
   }
 }

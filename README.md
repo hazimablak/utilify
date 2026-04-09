@@ -1,57 +1,49 @@
-# 🛠️ Utilify Utimate
+# 🛠️ Utilify - The Ultimate Multipurpose Toolkit
 
-<div align="center">
-  <b>A fully offline, privacy-focused, multi-functional utility app.</b> <br>
-  <i>Tamamen çevrimdışı çalışan, gizlilik odaklı, çok fonksiyonlu araç kutusu uygulaması.</i>
-</div>
+![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)
+![Provider](https://img.shields.io/badge/Provider-State_Management-blue?style=for-the-badge)
 
-<br>
+**Utilify**, günlük dijital ihtiyaçlarınızı tek bir çatı altında toplayan, modüler ve yüksek performanslı bir Flutter uygulamasıdır. İçerisinde Görsel Düzenleme, PDF İşlemleri, Yapay Zeka Destekli Ses/Çeviri Araçları ve Akıllı OCR Tarayıcı barındırır.
 
-🚧 *Work in Progress (WIP) / Geliştirme Aşamasındadır*
+## ✨ Öne Çıkan Özellikler (Modüller)
 
----
+### 🎨 1. Image Lab (Görsel Atölyesi)
+- Fotoğraf Sıkıştırma (Pro Kalite)
+- Gelişmiş Kırpma ve Düzenleme
+- Yapay Zeka Arka Plan Silici
+- Akıllı Bulanıklaştırma (Blur)
+- Meme Maker ve Fotoğraf Filtreleri
 
-<details open>
-<summary><b>🇬🇧 English Documentation</b></summary>
+### 📄 2. PDF Studio
+- Çoklu Görselden PDF Oluşturma (Sıralama destekli)
+- PDF Birleştirme
+- PDF Şifreleme / Şifre Çözme
+- Belirli Sayfaları Çıkartma
 
-## 🌟 Why utilify?
-Many utility apps require an internet connection and upload your data to servers. **utilify** processes everything **on-device**, ensuring 100% privacy, security, and speed.
+### 🎙️ 3. Voice & Text (Ses ve Çeviri)
+- **Lingua Master:** Anında sesli veya yazılı çift yönlü çeviri (Google ML Kit).
+- **Text-to-Speech:** Özelleştirilebilir hız ve ton ayarıyla metin seslendirme.
+- **Transcribe (Deşifre):** Uzun konuşmaları anında metne dökme.
+- **Voice Effects:** Eğlenceli ses filtreleri (Helyum, Robot, Uzaylı vb.).
 
-## 🚀 Core Modules (Upcoming)
-* 🎨 **Image Lab:** Image format conversion and compression.
-* 📄 **PDF Studio:** Convert photos to PDF and edit documents.
-* 🎙️ **Voice & Text:** Speech-to-Text (STT) and Text-to-Speech (TTS).
-* 🔍 **OCR Reader:** Extract text from camera or gallery images.
-
-## 🏗️ Tech Stack & Architecture
-Built with scalability and clean code principles using a **Feature-First** architecture.
-* **Language:** Dart
-* **Framework:** Flutter
-* **State Management:** Provider
-* **Key Packages:** `google_ml_kit`, `pdf`, `printing`, `speech_to_text`
-
-</details>
-
-<details>
-<summary><b>🇹🇷 Türkçe Dokümantasyon</b></summary>
-
-## 🌟 Neden utilify?
-Günümüzde birçok araç uygulaması internet bağlantısı gerektiriyor ve kullanıcı verilerini sunuculara yüklüyor. **utilify**, tüm işlemleri **cihaz üzerinde (on-device)** gerçekleştirerek %100 gizlilik, güvenlik ve hız sunmayı hedefler.
-
-## 🚀 Planlanan Modüller (Yakında)
-* 🎨 **Görsel Atölyesi:** Resim formatlarını dönüştürme ve sıkıştırma işlemleri.
-* 📄 **Belge Masası:** Fotoğraflardan PDF oluşturma ve PDF düzenleme.
-* 🎙️ **Dil Çevirici:** Sesi anında yazıya dökme (STT) ve metni sese çevirme (TTS).
-* 🔍 **Optik Okuyucu (OCR):** Cihaz kamerasından veya galeriden seçilen metinleri tarama.
-
-## 🏗️ Kullanılan Teknolojiler & Mimari
-Ölçeklenebilirlik ve temiz kod prensipleri gözetilerek **Feature-First** (Özellik Odaklı) klasör yapısıyla geliştirilmektedir.
-* **Dil:** Dart
-* **Framework:** Flutter
-* **State Management:** Provider
-* **Temel Paketler:** `google_ml_kit`, `pdf`, `printing`, `speech_to_text`
-
-</details>
+### 🔍 4. OCR & Scanner (Akıllı Tarayıcı)
+- **Text Recognizer:** Fotoğraflardaki metinleri saniyeler içinde kopyalanabilir yazıya çevirme.
+- **QR & Barkod:** Tarama ve anında özel QR kod oluşturup galeriye indirme.
+- **Business Card Scanner:** Kartvizitlerden Telefon, E-Posta ve Web Sitesi ayıklama (Regex & ML Kit).
+- **Çeviri Kamerası:** Yabancı metinleri fotoğraflayıp anında Türkçe'ye çevirme.
 
 ---
-> *Developed by [Hazım Ablak](https://software-developer-hafiz.netlify.app/) - Computer Engineering Student*
+
+## 🏗️ Mimari ve Klasör Yapısı (Clean Architecture)
+Bu proje, sürdürülebilirliği sağlamak ve kod karmaşasını önlemek adına **Clean Architecture** prensipleriyle `logic` (Provider) ve `screens` (UI) olarak ayrıştırılmış modüler bir yapıya sahiptir.
+
+```text
+lib/
+ ┣ 📂 features/
+ ┃ ┣ 📂 image_lab/      (logic & screens)
+ ┃ ┣ 📂 pdf_studio/     (logic & screens)
+ ┃ ┣ 📂 voice_text/     (logic & screens)
+ ┃ ┗ 📂 ocr_scanner/    (logic & screens)
+ ┣ 📂 widgets/          (Ortak bileşenler)
+ ┗ 📜 main.dart         (MultiProvider ve Başlangıç)
