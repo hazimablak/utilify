@@ -4,7 +4,87 @@
 ![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)
 ![Provider](https://img.shields.io/badge/Provider-State_Management-blue?style=for-the-badge)
 
-**Utilify**, günlük dijital ihtiyaçlarınızı tek bir çatı altında toplayan, modüler ve yüksek performanslı bir Flutter uygulamasıdır. İçerisinde Görsel Düzenleme, PDF İşlemleri, Yapay Zeka Destekli Ses/Çeviri Araçları ve Akıllı OCR Tarayıcı barındırır.
+---
+
+<details open>
+<summary>🇬🇧 English</summary>
+
+## 📖 About
+
+**Utilify** is a modular and high-performance Flutter application that brings together your daily digital needs in one place.
+
+It includes:
+- Image Editing Tools
+- PDF Utilities
+- AI-Powered Voice & Translation Tools
+- Smart OCR Scanner
+
+---
+
+## ✨ Key Features (Modules)
+
+### 🎨 1. Image Lab
+- Photo Compression (Pro Quality)
+- Advanced Crop & Editing
+- AI Background Remover
+- Smart Blur Tool
+- Meme Maker & Photo Filters
+
+### 📄 2. PDF Studio
+- Create PDF from Multiple Images
+- PDF Merge
+- PDF Encrypt / Decrypt
+- Extract Specific Pages
+
+### 🎙️ 3. Voice & Text
+- **Lingua Master:** Instant voice/text translation
+- **Text-to-Speech:** Adjustable speed & pitch
+- **Transcribe:** Convert speech into text
+- **Voice Effects:** Robot, Helium, Alien effects
+
+### 🔍 4. OCR & Scanner
+- **Text Recognizer:** Extract text from images
+- **QR & Barcode:** Scan and generate QR codes
+- **Business Card Scanner:** Extract phone, email & websites
+- **Translation Camera:** Translate text instantly from camera
+
+---
+
+## 🏗️ Architecture & Folder Structure
+
+This project follows **Clean Architecture** principles with a modular structure separated into `logic` and `screens`.
+
+```text
+lib/
+ ┣ 📂 features/
+ ┃ ┣ 📂 image_lab/
+ ┃ ┣ 📂 pdf_studio/
+ ┃ ┣ 📂 voice_text/
+ ┃ ┗ 📂 ocr_scanner/
+ ┣ 📂 widgets/
+ ┗ 📜 main.dart
+```
+
+</details>
+
+---
+
+<details>
+<summary>🇹🇷 Türkçe</summary>
+
+## 📖 Hakkında
+
+**Utilify**, günlük dijital ihtiyaçlarınızı tek bir çatı altında toplayan, modüler ve yüksek performanslı bir Flutter uygulamasıdır.
+
+İçerisinde:
+- Görsel Düzenleme Araçları
+- PDF İşlemleri
+- Yapay Zeka Destekli Ses & Çeviri Araçları
+- Akıllı OCR Tarayıcı
+
+bulunmaktadır.
+
+---
 
 ## ✨ Öne Çıkan Özellikler (Modüller)
 
@@ -16,34 +96,38 @@
 - Meme Maker ve Fotoğraf Filtreleri
 
 ### 📄 2. PDF Studio
-- Çoklu Görselden PDF Oluşturma (Sıralama destekli)
+- Çoklu Görselden PDF Oluşturma
 - PDF Birleştirme
 - PDF Şifreleme / Şifre Çözme
 - Belirli Sayfaları Çıkartma
 
 ### 🎙️ 3. Voice & Text (Ses ve Çeviri)
-- **Lingua Master:** Anında sesli veya yazılı çift yönlü çeviri (Google ML Kit).
-- **Text-to-Speech:** Özelleştirilebilir hız ve ton ayarıyla metin seslendirme.
-- **Transcribe (Deşifre):** Uzun konuşmaları anında metne dökme.
-- **Voice Effects:** Eğlenceli ses filtreleri (Helyum, Robot, Uzaylı vb.).
+- **Lingua Master:** Anında sesli/yazılı çeviri
+- **Text-to-Speech:** Hız ve ton ayarlı seslendirme
+- **Transcribe:** Konuşmayı metne dönüştürme
+- **Voice Effects:** Robot, helyum, uzaylı efektleri
 
 ### 🔍 4. OCR & Scanner (Akıllı Tarayıcı)
-- **Text Recognizer:** Fotoğraflardaki metinleri saniyeler içinde kopyalanabilir yazıya çevirme.
-- **QR & Barkod:** Tarama ve anında özel QR kod oluşturup galeriye indirme.
-- **Business Card Scanner:** Kartvizitlerden Telefon, E-Posta ve Web Sitesi ayıklama (Regex & ML Kit).
-- **Çeviri Kamerası:** Yabancı metinleri fotoğraflayıp anında Türkçe'ye çevirme.
+- **Text Recognizer:** Görselden metin çıkarma
+- **QR & Barkod:** Tarama ve QR oluşturma
+- **Business Card Scanner:** Kartvizit bilgisi ayıklama
+- **Çeviri Kamerası:** Kameradan anlık çeviri
 
 ---
 
-## 🏗️ Mimari ve Klasör Yapısı (Clean Architecture)
-Bu proje, sürdürülebilirliği sağlamak ve kod karmaşasını önlemek adına **Clean Architecture** prensipleriyle `logic` (Provider) ve `screens` (UI) olarak ayrıştırılmış modüler bir yapıya sahiptir.
+## 🏗️ Mimari ve Klasör Yapısı
+
+Bu proje, sürdürülebilirlik ve düzen için **Clean Architecture** prensipleriyle geliştirilmiştir.
 
 ```text
 lib/
  ┣ 📂 features/
- ┃ ┣ 📂 image_lab/      (logic & screens)
- ┃ ┣ 📂 pdf_studio/     (logic & screens)
- ┃ ┣ 📂 voice_text/     (logic & screens)
- ┃ ┗ 📂 ocr_scanner/    (logic & screens)
- ┣ 📂 widgets/          (Ortak bileşenler)
- ┗ 📜 main.dart         (MultiProvider ve Başlangıç)
+ ┃ ┣ 📂 image_lab/
+ ┃ ┣ 📂 pdf_studio/
+ ┃ ┣ 📂 voice_text/
+ ┃ ┗ 📂 ocr_scanner/
+ ┣ 📂 widgets/
+ ┗ 📜 main.dart
+```
+
+</details>
